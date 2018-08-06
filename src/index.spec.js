@@ -1,11 +1,10 @@
 import { expect } from "chai";
-import Course from "./index";
 import fs from "fs";
 import jsdom from "jsdom";
 
 describe('Out first test', ()=>{
   it('should pass',()=>{
-    expect(Course.get()).to.equal('$1,000.00');
+    expect(1).to.equal(1);
   });
 });
 
@@ -14,7 +13,7 @@ describe('index.html',()=>{
     const index = fs.readFileSync('./src/index.html',"utf-8");
     jsdom.env(index,function (err,window) {
       const h1 = window.document.getElementsByTagName('h1')[0];
-      expect(h1.innerHTML).to.equal('Hello Pavel!');
+      expect(h1.innerHTML).to.equal('Users');
       done();
       window.close();
     });
