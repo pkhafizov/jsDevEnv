@@ -1,23 +1,32 @@
+import webpack from 'webpack';
 import path from 'path';
 
 export default {
-  debug: true,
-  devtool: 'inline-source-map',
-  noInfo: false,
-  entry: [
-    path.resolve(__dirname, 'src/index')
-  ],
+  mode: 'development',
+  entry: ['webpack-hot-middleware/client?reload=true',path.resolve(__dirname,'src/index')],
   target: 'web',
   output: {
     path: path.resolve(__dirname, 'src'),
     publicPath: '/',
     filename: 'bundle.js'
-  },
-  plugins: [],
+  },  
   module: {
-    loaders: [
-      {test: /\.js$/, exclude: /node_modules/, loaders: ['babel']},
-      {test: /\.css$/, loaders: ['style','css']}
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      },
+      {
+        test: /(\.css)$/, 
+        use: ['style-loader','css-loader'],
+      }
     ]
-  }
+  },
+  plugins: [new webpack.HotModuleReplacementPlugin(), new webpack.NoEmitOnErrorsPlugin()],
 }
